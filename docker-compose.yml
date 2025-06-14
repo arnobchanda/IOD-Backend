@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://admin:Pi%402025@mongodb:27017/IndianOlympicDream?authSource=admin&directConnection=true
+      - MONGO_DB_NAME=IndianOlympicDream
+      - PORT=3000
+    networks:
+      - app-network
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:4.4.18
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - mongodb-configdb:/data/configdb
+      - mongodb-db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=Pi@2025
+    networks:
+      - app-network
+    restart: unless-stopped
+
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb-configdb:
+  mongodb-db:
