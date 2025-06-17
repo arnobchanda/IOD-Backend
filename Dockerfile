@@ -1,17 +1,15 @@
-FROM node:18-alpine
+FROM iod2/iod-frontend:latest
 
 WORKDIR /app
 
-COPY package*.json ./ 
+COPY package*.json ./
+COPY server ./server
+COPY server.js ./
 
 RUN npm install --production
 
-COPY . .
+ENV NODE_ENV=production 
+ENV PORT=3000
 
 EXPOSE 3000
-
-ENV NODE_ENV=production 
-
-ENV PORT 3000
-
-CMD ["npm", "start"]
+# CMD ["npm", "start"]

@@ -1,0 +1,5 @@
+# Removing build folder
+dist/
+
+# ENV file containing mongodb creds
+.env
