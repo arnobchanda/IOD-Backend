@@ -13,6 +13,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag iod2/iod-backend:latest
+    - 
+      name: Checkout code
+      uses: actions/checkout@v4
+    - 
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    -
+      name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - 
+      name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: Dockerfile
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/iod-backend:latest
+        cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/iod-backend:cache
+        cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/iod-backend:cache,mode=max    
