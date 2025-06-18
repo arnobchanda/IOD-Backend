@@ -1,7 +1,7 @@
 # Production Deployment
 
 - We use docker compose for running our services required to run the application correctly
-- You can learn how to install docker engine and docker compose for you OS [here](https://docs.docker.com/engine/install/).
+- You can learn how to install Docker Engine and Docker Compose for your OS by following the [official Docker installation guide](https://docs.docker.com/engine/install/).
 
 ## Environment Setup
 
